@@ -33,13 +33,28 @@ public static class ArraysTester {
     /// </summary>
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     private static double[] MultiplesOf(double number, int length)
-    {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+    {  
+        // TODO Problem 1
+        /*Plan for MultiplesOf Function
+        Initialize an array of doubles with the size equal to the length parameter. This array will store the multiples of the given number.
+        Loop through from 0 to length - 1. For each iteration, calculate the multiple of the given number by multiplying the number by the current iteration index plus 1 (since we want to start from the first multiple, not zero).
+        Assign the calculated multiple to the respective index in the array.
+        Return the array containing the multiples.*/
 
-        return new double[0]; // replace this return statement with your own
+        //Step 1 for solving the problem
+        //Create a new array of doubles with the length of the input
+        double[] multiples = new double[length];
+
+        //Step 2
+        //Loop through to calculate each multiple
+        for (int i=0; i<length; i++)
+        {
+            //Step 3
+            //The first multiple is number itself, so it starts from one and multiplies by the number
+            multiples[i] = number * (i+1);
+        }
+        //Step 4
+        return multiples;
     }
     
     /// <summary>
@@ -53,9 +68,44 @@ public static class ArraysTester {
     private static void RotateListRight(List<int> data, int amount)
     {
         // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        /*Plan for RotateListRight Function
+        1....Handle Cases Where No Rotation Is Needed: If the amount to rotate by is zero or equal to the list size, there's no need to perform any operations, as the list will remain the same.
+        2....Normalize the Rotation Amount: If the amount is greater than the list size, reduce it to a meaningful equivalent within the list size range. This can be done by taking the remainder of the amount divided by the list size (amount % data.Count).
+        3....Split and Reorder the List:
+                 Calculate Split Point: Determine the index at which to split the list. This will be the list's length minus the normalized rotation amount.
+                Split the List: Divide the list into two parts at the split point: one from the beginning to the split point (exclusive) and the other from the split point to the end.
+                Recombine the List: Append the first part to the end of the second part. This results in the rotated list.
+        4....Modify the Original List: Since the requirement is to modify the original list rather than returning a new one, clear the original list and add all elements from the recombined list back into it.
+        */
+       //Step 1
+       //Normalize the amount of rotation to avoid unnecessary rotation
+       amount = amount % data.Count;
+
+       //Step 2
+       //if no rotation is needed, return
+       if (amount == 0) return;
+
+       //Step 3
+       //calculate the split index
+       int splitPoint = data.Count - amount;
+
+       //Step 4
+       //Perform the actual rotation and create a new list to hold the rotated data
+       List<int> rotatedData = new List<int>();
+
+       //Step 5
+       //Add the data from the split point to the end of the original list
+       rotatedData.AddRange(data.GetRange(splitPoint, amount));
+
+       //Step 6
+       rotatedData.AddRange(data.GetRange(0, splitPoint));
+
+       //Step 7
+       //Copy the rotated data back to the original list
+         for (int i=0; i<data.Count; i++)
+         {
+              data[i] = rotatedData[i];
+         }
 
     }
 }
