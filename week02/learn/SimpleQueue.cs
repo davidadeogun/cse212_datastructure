@@ -66,8 +66,8 @@
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
 
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        var value = _queue[0]; // Defect 1 - Need to remove from the front of the queue
+        _queue.RemoveAt(0); // Defect 2 - Need to remove from the front of the queue and that index has to be 0 and not 1
         return value;
     }
 }

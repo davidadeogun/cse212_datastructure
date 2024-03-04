@@ -1,7 +1,4 @@
-﻿
-
-
-Console.WriteLine("\n======================\nDivisors\n======================");
+﻿Console.WriteLine("\n======================\nDivisors\n======================");
 Divisors.Run();
 
 Console.WriteLine("\n======================\nArray Selector\n======================");
@@ -19,3 +16,7 @@ Console.WriteLine("\n======================\nAlgorithms\n======================"
 
  Console.WriteLine("\n======================\nArray Selector Solution\n======================");
 ArraySelectorSolution.Run();
+
+
+
+
