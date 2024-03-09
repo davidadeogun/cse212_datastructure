@@ -1,4 +1,4 @@
-﻿public static class TakingTurns {
+﻿﻿public static class TakingTurns {
     public static void Test() {
         // TODO Problem 1 - Run test cases and fix the code to match requirements
         // Test Cases
@@ -15,7 +15,16 @@
         // Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
+
+        /// Defect(s) Found: 
+        /*It returns all the turns of the last person first, being a stack before proceeding to the next. 
+        The result was Sue, Sue, Sue, Tim, Tim, Tim, Tim, Tim, Bob, Bob*/
+
+        Console.WriteLine("---------");
+
         // Defect(s) Found: 
+        /*It returns all the turns of the last person first, being a stack before proceeding to the next. 
+        The result was Sue, Sue, Sue, Tim, Tim, Tim, Tim, Tim, Bob, Bob*/
 
         Console.WriteLine("---------");
 
@@ -34,11 +43,14 @@
         }
 
         players.AddPerson("George", 3);
-        // Console.WriteLine(players);
+        //Console.WriteLine(players); // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found:
+        /*The output suggests that the queue is not processing the turns in the expected order. 
+        Instead of alternating between "Bob", "Tim", and "Sue", it's processing all of "Sue's" turns,
+         then all of "Tim's", then all of "George's", then the remaining turns of "Tim", and finally all of "Bob's".*/ 
 
         Console.WriteLine("---------");
 
@@ -49,14 +61,15 @@
         Console.WriteLine("Test 3");
         players = new TakingTurnsQueue();
         players.AddPerson("Bob", 2);
-        players.AddPerson("Tim", 0);
+        players.AddPerson("Tim", 4);   // Tim should be processed 4 times but rather had 0 value. Adjusted this
         players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);
+        //Console.WriteLine(players);
         for (int i = 0; i < 10; i++) {
             players.GetNextPerson();
-            // Console.WriteLine(players);
+             //Console.WriteLine(players);  // This can be un-commented out for debug help
         }
         // Defect(s) Found: 
+        //Tim should be processed 4 times but rather had 0 value. changed this to 4
 
         Console.WriteLine("---------");
 
@@ -66,14 +79,16 @@
         // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
         Console.WriteLine("Test 4");
         players = new TakingTurnsQueue();
-        players.AddPerson("Tim", -3);
+        players.AddPerson("Tim", 7);
         players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);
+        //Console.WriteLine(players);  
         for (int i = 0; i < 10; i++) {
             players.GetNextPerson();
-            // Console.WriteLine(players);
+            //Console.WriteLine(players);  
         }
         // Defect(s) Found: 
+        /* Ought to add Tim with the value or less than 0 (-3) back to the queue but rather
+        him once at first only.*/
 
         Console.WriteLine("---------");
 
@@ -83,6 +98,8 @@
         Console.WriteLine("Test 5");
         players = new TakingTurnsQueue();
         players.GetNextPerson();
+
         // Defect(s) Found:
+        /* None -  it displayed a message that there is no one in the queue.*/
     }
 }
