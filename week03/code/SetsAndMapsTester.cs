@@ -2,8 +2,8 @@ using System.Text.Json;
 
 public static class SetsAndMapsTester {
     public static void Run() {
-        // Problem 1: Find Pairs with Sets
-        Console.WriteLine("\n=========== Finding Pairs TESTS ===========");
+        // PROBLEM 1: Find Pairs with Sets
+        Console.WriteLine("\n=========== PROBLEM 1:Finding Pairs TESTS ===========");
         DisplayPairs(new[] { "am", "at", "ma", "if", "fi" });
         // ma & am
         // fi & if
@@ -21,14 +21,36 @@ public static class SetsAndMapsTester {
         DisplayPairs(new[] { "ab", "aa", "ba" });
         // ba & ab
         Console.WriteLine("---------");
-        DisplayPairs(new[] { "23", "84", "49", "13", "32", "46", "91", "99", "94", "31", "57", "14" });
-        // 32 & 23
-        // 94 & 49
-        // 31 & 13
+        void DisplayPairs(string[] words)
+        {
+            HashSet<string> set = new HashSet<string>();
+            List<(string, string)> pairs = new List<(string, string)>();
 
-        // Problem 2: Degree Summary
+            foreach (string word in words)
+            {
+                string reversed = new string(word.Reverse().ToArray());
+
+                if (set.Contains(reversed))
+                {
+                    pairs.Add((word, reversed));
+                    set.Remove(reversed); 
+                }
+                else
+                {
+                    set.Add(word);
+                }
+            }
+
+            foreach (var pair in pairs)
+            {
+                Console.WriteLine($"{pair.Item1} & {pair.Item2}");
+            }
+        }
+
+        Console.WriteLine(" ");
+        // PROBLEM 2: Degree Summary
         // Sample Test Cases (may not be comprehensive) 
-        Console.WriteLine("\n=========== Census TESTS ===========");
+        Console.WriteLine("\n=========== PROBLEM 2: Census TESTS ===========");
         Console.WriteLine(string.Join(", ", SummarizeDegrees("census.txt")));
         // Results may be in a different order:
         // <Dictionary>{[Bachelors, 5355], [HS-grad, 10501], [11th, 1175],
@@ -36,9 +58,12 @@ public static class SetsAndMapsTester {
         // [Assoc-voc, 1382], [7th-8th, 646], [Doctorate, 413], [Prof-school, 576],
         // [5th-6th, 333], [10th, 933], [1st-4th, 168], [Preschool, 51], [12th, 433]}
 
-        // Problem 3: Anagrams
+
+
+        // PROBLEM 3: ANAGRAMS
         // Sample Test Cases (may not be comprehensive) 
-        Console.WriteLine("\n=========== Anagram TESTS ===========");
+        Console.WriteLine(" ");
+        Console.WriteLine("\n===========PROBLEM 3: Anagram TESTS ===========");
         Console.WriteLine(IsAnagram("CAT", "ACT")); // true
         Console.WriteLine(IsAnagram("DOG", "GOOD")); // false
         Console.WriteLine(IsAnagram("AABBCCDD", "ABCD")); // false
@@ -48,10 +73,59 @@ public static class SetsAndMapsTester {
         Console.WriteLine(IsAnagram("A Decimal Point", "Im a Dot in Place")); // true
         Console.WriteLine(IsAnagram("tom marvolo riddle", "i am lord voldemort")); // true
         Console.WriteLine(IsAnagram("Eleven plus Two", "Twelve Plus One")); // true
-        Console.WriteLine(IsAnagram("Eleven plus One", "Twelve Plus One")); // false
+        bool IsAnagram(string word1, string word2)
+        {
+            word1 = word1.Replace(" ", "").ToLower();
+            word2 = word2.Replace(" ", "").ToLower();
 
-        // Problem 4: Maze
-        Console.WriteLine("\n=========== Maze TESTS ===========");
+            //If the lengths are not equal, they are not anagrams
+            if (word1.Length != word2.Length)
+            {
+                return false;
+            }
+
+            //A dictionary to count the frequency of each character
+            Dictionary<char, int> counts = new Dictionary<char, int>();
+
+            //This counts the frequency of each character in the first word
+            foreach (char word in word1)
+            {
+                if (counts.ContainsKey(word))
+                {
+                    counts[word]++;
+                }
+                else
+                {
+                    counts[word] = 1;
+                }
+            }
+
+            // Subtracts the frequency of each character in the second word
+            foreach (char word in word2)
+            {
+                if (counts.ContainsKey(word))
+                {
+                    counts[word]--;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            // If all counts are zero, the words are anagrams
+            foreach (int count in counts.Values)
+            {
+                if (count != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+       Console.WriteLine(" ");
+        Console.WriteLine("========PROBLEM 4: Maze TESTS====================");
         Dictionary<ValueTuple<int, int>, bool[]> map = SetupMazeMap();
         var maze = new Maze(map);
         maze.ShowStatus(); // Should be at (1,1)
@@ -77,7 +151,7 @@ public static class SetsAndMapsTester {
 
         // Problem 5: Earthquake
         // Sample Test Cases (may not be comprehensive) 
-        Console.WriteLine("\n=========== Earthquake TESTS ===========");
+        Console.WriteLine("\n===========PROBLEM 5: Earthquake TESTS ===========");
         EarthquakeDailySummary();
 
         // Sample output from the function.  Number of earthquakes, places, and magnitudes will vary.
@@ -132,6 +206,13 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            var degree = fields[3];
+            if(degrees.ContainsKey(degree)) 
+            {
+                degrees[degree]++;
+            } else {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;

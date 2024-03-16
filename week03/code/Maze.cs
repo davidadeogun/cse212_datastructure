@@ -30,6 +30,15 @@ public class Maze {
     /// </summary>
     public void MoveLeft() {
         // FILL IN CODE
+        bool [] directions = _mazeMap[(ValueTuple<int, int>) (_currX, _currY)];
+
+        //check if left move is possible
+        if(directions[0]) {
+            _currX--;
+        } else {
+            Console.WriteLine("You can't go that way!");
+        }
+        
     }
 
     /// <summary>
@@ -38,23 +47,42 @@ public class Maze {
     /// </summary>
     public void MoveRight() {
         // FILL IN CODE
+        bool [] directions = _mazeMap[(ValueTuple<int, int>) (_currX, _currY)];
+        
+        if(directions[1]) {
+            _currX++;
+        } else {
+            Console.WriteLine("You can't go that way!");
+        }
     }
 
     /// <summary>
     /// Check to see if you can move up.  If you can, then move.  If you
     /// can't move, then display "Can't go that way!"
     /// </summary>
-    public void MoveUp() {
-        // FILL IN CODE
+   public void MoveUp() {
+    // FILL IN CODE
+    bool [] directions = _mazeMap[(ValueTuple<int, int>) (_currX, _currY)];
+    if (directions[2]) {
+        _currY--;
+    } else {
+        Console.WriteLine("You can't go that way!");
     }
+}
 
     /// <summary>
     /// Check to see if you can move down.  If you can, then move.  If you
     /// can't move, then display "Can't go that way!"
     /// </summary>
-    public void MoveDown() {
-        // FILL IN CODE
+  public void MoveDown() {
+    // FILL IN CODE
+    bool [] directions = _mazeMap[(ValueTuple<int, int>) (_currX, _currY)];
+    if (directions[3]) {
+        _currY++;
+    } else {
+        Console.WriteLine("You can't go that way!");
     }
+}
 
     public void ShowStatus() {
         Console.WriteLine($"Current location (x={_currX}, y={_currY})");

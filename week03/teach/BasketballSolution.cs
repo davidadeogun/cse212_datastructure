@@ -18,8 +18,9 @@ public class BasketballSolution
     public static void Run()
     {
         var players = new Dictionary<string, int>();
-
         using var reader = new TextFieldParser("basketball.csv");
+      
+       
         reader.TextFieldType = FieldType.Delimited;
         reader.SetDelimiters(",");
         reader.ReadFields(); // ignore header row
