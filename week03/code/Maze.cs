@@ -40,7 +40,7 @@ public class Maze {
         }
         
     }
-
+ 
     /// <summary>
     /// Check to see if you can move right.  If you can, then move.  If you
     /// can't move, then display "Can't go that way!"
