@@ -67,7 +67,7 @@ public static class RecursionTester {
         Console.WriteLine(CountWaysToClimb(20)); // 121415
         // Uncomment out the test below after implementing memoization.  It won't work without it.
         // TODO Problem 3
-        // Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
+        Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
 
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
@@ -146,8 +146,12 @@ public static class RecursionTester {
     /// n &lt;= 0, just return 0.   A loop should not be used.
     /// </summary>
     public static int SumSquaresRecursive(int n) {
-        // TODO Start Problem 1
-        return 0;
+        // TODO Start Problem 1 SOLVED
+        if(n <= 0) {
+            return 0;
+        } else {
+            return n * n + SumSquaresRecursive(n -1);
+        }
     }
 
     /// <summary>
@@ -169,9 +173,22 @@ public static class RecursionTester {
     /// You can assume that the size specified is always valid (between 1 
     /// and the length of the letters list).
     /// </summary>
-    public static void PermutationsChoose(string letters, int size, string word = "") {
-        // TODO Start Problem 2
+    //TODO Problem 2 SOLVED
+    public static void PermutationsChoose(string letters, int size, string word = "")
+{
+    if (size == 0)
+    {
+        Console.WriteLine(word);
+        return;
     }
+
+    for (int i = 0; i < letters.Length; i++)
+    {
+        word += letters[i];
+        PermutationsChoose(letters, size - 1, word);
+        word = word.Remove(word.Length - 1);
+    }
+}
 
     /// <summary>
     /// #############
@@ -219,20 +236,32 @@ public static class RecursionTester {
     /// until the memoization is implemented.
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null) {
-        // Base Cases
-        if (s == 0)
-            return 0;
-        if (s == 1)
-            return 1;
-        if (s == 2)
-            return 2;
-        if (s == 3)
-            return 4;
+   
+    if (remember == null)
+        remember = new Dictionary<int, decimal>();
 
-        // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        return ways;
-    }
+    // Base Cases
+    if (s == 0)
+        return 0;
+    if (s == 1)
+        return 1;
+    if (s == 2)
+        return 2;
+    if (s == 3)
+        return 4;
+
+    // This checks if the result is already in the memoization dictionary
+    if (remember.ContainsKey(s))
+        return remember[s];
+
+    
+    decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+
+  
+    remember[s] = ways;
+
+    return ways;
+}
 
     /// <summary>
     /// #############
@@ -248,8 +277,16 @@ public static class RecursionTester {
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
     public static void WildcardBinary(string pattern) {
-        // TODO Start Problem 4
+        //TODO Problem 4 SOLVED
+    int wildcardIndex = pattern.IndexOf('*');
+    if (wildcardIndex == -1) {
+        Console.WriteLine(pattern);
+        return;
     }
+
+    WildcardBinary(pattern.Remove(wildcardIndex, 1).Insert(wildcardIndex, "0"));
+    WildcardBinary(pattern.Remove(wildcardIndex, 1).Insert(wildcardIndex, "1"));
+}
 
     /// <summary>
     /// Use recursion to Print all paths that start at (0,0) and end at the
@@ -263,9 +300,11 @@ public static class RecursionTester {
 
         // currPath.Add((1,2)); // Use this syntax to add to the current path
 
-        // TODO Start Problem 5
+        // TODO Start Problem 5 NOT SOLVED.
         // ADD CODE HERE
+        // Check if we are at the end
+   
 
-        // Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
+       //Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
     }
 }
